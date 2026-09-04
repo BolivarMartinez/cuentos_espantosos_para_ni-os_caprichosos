@@ -24,9 +24,9 @@ trabajo hackhaton/
 
 ## Qué cambió frente a la versión anterior (visual)
 
-- Header simplificado: logo pequeño en caja negra (a la izquierda) + nombre del sitio, y un solo botón morado "Registrarse / Iniciar sesión" a la derecha. Se quitaron la barra de búsqueda y el ícono de carrito visibles, para igualar la maqueta de tu equipo.
+- Header simplificado: logo pequeño en caja negra (a la izquierda) + nombre del sitio, y acciones de autenticación, carrito y favoritos a la derecha. Se quitó la barra de búsqueda para igualar la maqueta de tu equipo.
 - Hero a todo lo ancho con degradado oscuro abajo y el título grande superpuesto con efecto glitch (sombra cian/magenta), igual que en la imagen.
-- Tarjetas de cómic con borde morado, título en la fuente "Creepster" y el precio como botón redondeado (**haz clic en el precio para agregarlo al carrito** — se guarda en segundo plano, sin un carrito visible todavía, tal como se ve en la maqueta).
+- Tarjetas de cómic con borde morado, título en la fuente "Creepster" y el precio como botón redondeado (**haz clic en el precio para agregarlo al carrito**). El carrito permite cambiar cantidades, eliminar productos y consultar el total.
 - Sección de merchandising a sangre (las fotos tocan los bordes de la pantalla), con esquinas redondeadas solo en la primera y última tarjeta, igual que en tu captura.
 
 ## Funciones que siguen intactas
@@ -37,36 +37,24 @@ trabajo hackhaton/
   - Usuario: `cuentos espantosos`
   - Contraseña: `LEGENDS_26*`
   - Desde ahí: agregar/eliminar cómics, agregar/eliminar fotos de merchandising, eliminar comentarios de cualquier cómic.
+- **Modo auditor de solo lectura**: inicia sesión desde el acceso normal con `auditor@empresa.com` y contraseña `Auditor_2026*` para consultar estadísticas, cómics, merchandising y noticias sin botones de edición o eliminación.
+- **Favoritos por usuario**: guarda cómics o productos de merchandising y gestiona la lista desde el botón de favoritos.
+- **Noticias**: se muestran en la portada y el administrador puede publicarlas o eliminarlas desde su panel.
 
 ## Nota honesta
 
 Como antes, todo corre en el navegador con `localStorage`: es perfecto para la demo del hackathon, pero los datos no se comparten entre distintas personas ni dispositivos. Para eso se necesitaría un backend real (Node.js + base de datos, o Firebase/Supabase) más adelante.
-## Resumen de cambios realizados hoy
+## Cambios realizados hoy
 
-Se creó la primera versión funcional de **Cuentos Espantosos para niños caprichosos**, una tienda web de cómics y merchandising desarrollada con HTML, CSS y JavaScript puro.
+Se incorporó un **modo auditor de solo lectura** para revisar el estado de la demo sin alterar sus datos:
 
-### Funcionalidades
+- Se creó automáticamente la cuenta `auditor@empresa.com` con contraseña `Auditor_2026*`.
+- El panel muestra estadísticas de cómics, merchandising, noticias, reseñas y unidades en el carrito.
+- Incluye listados de cómics, productos y noticias, identificados como contenido de solo lectura.
+- El modo auditor oculta las acciones de compra y edición, y conserva la sesión al recargar la página.
+- El panel se actualiza cuando el administrador agrega o elimina contenido y cuando cambia el `localStorage` desde otra pestaña.
+- Se añadió el cierre de sesión específico del auditor y la restauración de la vista normal.
 
-- Registro e inicio de sesión de usuarios mediante `localStorage`.
-- Catálogo de cómics con portada, título y precio.
-- Carrito de compra: se agrega un cómic al hacer clic en su precio.
-- Sistema de reseñas con valoración de 1 a 5 estrellas y comentario.
-- Panel de administrador oculto, accesible tras cinco clics sobre el logo.
-- Gestión administrativa de cómics, productos de merchandising y comentarios.
-- Persistencia local de usuarios, productos, reseñas y carrito.
+También se documentaron y consolidaron las mejoras actuales de la interfaz: carrito visible con cantidades y total, favoritos por usuario, noticias administrables, galería de merchandising reorganizada, tipografía Roman Antique y recursos visuales en `assets/`.
 
-### Diseño y contenido visual
-
-- Header simplificado con logo, nombre del sitio y acceso a registro o inicio de sesión.
-- Hero a todo lo ancho con título superpuesto y efecto visual glitch.
-- Tarjetas de cómics con bordes morados y tipografía decorativa.
-- Sección de merchandising reorganizada como una galería con imágenes más pequeñas, separación uniforme, etiquetas, proporción `4 / 5`, bordes redondeados y sombra ligera.
-- Tipografía principal actualizada a **Roman Antique** mediante CDN.
-- Texto “Cuentos Espantosos para niños caprichosos” trasladado al header y retirado del hero para mantener una portada más limpia.
-- Inclusión de logos, estrellas, portadas y fotografías de merchandising en `assets/`.
-
-### Base técnica
-
-- Nueva estructura completa en `index.html`, `styles.css` y `app.js`.
-- Aplicación sin dependencias de `npm` ni backend.
-- Datos almacenados únicamente en el navegador mediante `localStorage`, adecuada para la demo del hackathon.
+La aplicación continúa funcionando sin dependencias de `npm` ni backend; todos los datos se almacenan localmente en el navegador para la demo del hackathon.

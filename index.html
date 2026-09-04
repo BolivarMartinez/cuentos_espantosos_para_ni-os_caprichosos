@@ -200,6 +200,33 @@
   </div>
 </div>
 
+<!-- ===================== PANEL AUDITOR ===================== -->
+<div class="modal-overlay" id="auditorPanelModal">
+  <div class="modal modal-wide auditor-modal">
+    <button class="modal-close" data-close="auditorPanelModal">✕</button>
+    <div class="auditor-heading">
+      <div>
+        <span class="auditor-kicker">Modo de supervisión</span>
+        <h2>Panel de auditoría</h2>
+      </div>
+      <span class="role-badge">Solo lectura</span>
+    </div>
+    <p class="auditor-intro">Consulta el estado del catálogo, las noticias, las reseñas y las ventas registradas sin modificar datos del sistema.</p>
+    <div class="audit-stats" id="auditStats"></div>
+
+    <h3>Listado de cómics</h3>
+    <div class="audit-list" id="auditComicsList"></div>
+
+    <h3>Listado de merchandising</h3>
+    <div class="audit-list" id="auditMerchList"></div>
+
+    <h3>Noticias publicadas</h3>
+    <div class="audit-list" id="auditNewsList"></div>
+
+    <button class="submit-btn danger" id="auditorLogoutBtn">Cerrar sesión de auditor</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <!-- ===================== MODAL: ZOOM DE MERCHANDISING ===================== -->

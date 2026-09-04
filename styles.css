@@ -738,6 +738,34 @@ h1, h2, h3, .section-bar, .comic-title {
   padding: 5px 10px; cursor: pointer; font-size: 0.8rem;
 }
 
+/* auditor */
+.auditor-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-right: 24px; }
+.auditor-heading h2 { margin-bottom: 4px; }
+.auditor-kicker { color: var(--purple-deep); font: 800 0.72rem 'Nunito', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+.role-badge, .read-only-label { color: #23634e; background: #d9f1e7; border: 1px solid #9dd6bd; border-radius: 14px; padding: 5px 9px; font: 800 0.7rem 'Nunito', sans-serif; white-space: nowrap; }
+.auditor-intro { margin: 0 0 18px; color: #5f536c; font: 0.88rem/1.4 'Nunito', sans-serif; }
+.audit-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.audit-stat { background: #fff; border: 1px solid #d7ccea; border-radius: 8px; padding: 10px 6px; text-align: center; }
+.audit-stat strong { display: block; color: var(--purple-deep); font: 900 1.25rem 'Nunito', sans-serif; }
+.audit-stat span { display: block; color: #746781; font: 0.68rem 'Nunito', sans-serif; }
+.audit-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.audit-list-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #fff; border: 1px solid #e0d8ec; border-radius: 7px; padding: 9px 11px; font: 0.83rem 'Nunito', sans-serif; }
+.audit-list-item > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.audit-empty { margin: 0; color: #746781; font: 0.82rem 'Nunito', sans-serif; }
+.auditor-modal h3 { margin-top: 20px; margin-bottom: 0; }
+.auditor-modal .submit-btn { margin-top: 22px; }
+body.auditor-mode .cart-btn,
+body.auditor-mode .favorites-btn { display: none; }
+body.auditor-mode .hero,
+body.auditor-mode .news-section,
+body.auditor-mode .content-panel,
+body.auditor-mode .site-footer { display: none; }
+
+@media (max-width: 600px) {
+  .audit-stats { grid-template-columns: repeat(3, 1fr); }
+  .role-badge { font-size: 0.62rem; }
+}
+
 /* toast */
 .toast {
   position: fixed;

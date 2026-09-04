@@ -15,6 +15,11 @@ const DB_KEYS = {
   ADMIN_SESSION: 'ce_admin_session'
 };
 
+const AUDITOR_CREDENTIALS = {
+  email: 'auditor@empresa.com',
+  password: 'Auditor_2026*'
+};
+
 const ADMIN_CREDENTIALS = {
   username: 'cuentos espantosos',
   password: 'LEGENDS_26*'
@@ -124,7 +129,17 @@ function seedData() {
       { id: cryptoId(), name: 'Póster LEGENDS', image: 'assets/legends-logo.png' }
     ]);
   }
-  if (!localStorage.getItem(DB_KEYS.USERS)) save(DB_KEYS.USERS, []);
+  const users = load(DB_KEYS.USERS, []);
+  if (!users.some(user => user.email === AUDITOR_CREDENTIALS.email)) {
+    users.push({
+      id: 'auditor_account',
+      name: 'Auditor del sistema',
+      email: AUDITOR_CREDENTIALS.email,
+      password: AUDITOR_CREDENTIALS.password,
+      role: 'auditor'
+    });
+    save(DB_KEYS.USERS, users);
+  }
   if (!localStorage.getItem(DB_KEYS.REVIEWS)) save(DB_KEYS.REVIEWS, {});
   if (!localStorage.getItem(DB_KEYS.CART)) save(DB_KEYS.CART, {});
   if (!localStorage.getItem(DB_KEYS.NEWS)) save(DB_KEYS.NEWS, []);
@@ -174,6 +189,8 @@ document.getElementById('authBtn').addEventListener('click', () => {
   if (currentUser) {
     currentUser = null;
     localStorage.removeItem(DB_KEYS.CURRENT_USER);
+    document.body.classList.remove('auditor-mode');
+    closeModal('auditorPanelModal');
     refreshAuthUI();
     renderFavorites();
     renderComics();
@@ -242,17 +259,36 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
     errorEl.textContent = 'Correo o contraseña incorrectos.';
     return;
   }
-  currentUser = { id: found.id, name: found.name, email: found.email };
+  currentUser = { id: found.id, name: found.name, email: found.email, role: found.role || 'customer' };
   save(DB_KEYS.CURRENT_USER, currentUser);
   errorEl.textContent = '';
   e.target.reset();
   closeModal('loginModal');
   refreshAuthUI();
-  showToast(`Sesión iniciada como ${found.name}`);
+  if (currentUser.role === 'auditor') {
+    document.body.classList.add('auditor-mode');
+    renderAuditPanel();
+    openModal('auditorPanelModal');
+    showToast('Modo auditor activado: solo lectura');
+  } else {
+    showToast(`Sesión iniciada como ${found.name}`);
+  }
   renderComics();
   renderMerch();
   renderFavorites();
   if (activeReviewComicId) renderReviewForm();
+});
+
+document.getElementById('auditorLogoutBtn').addEventListener('click', () => {
+  currentUser = null;
+  localStorage.removeItem(DB_KEYS.CURRENT_USER);
+  document.body.classList.remove('auditor-mode');
+  closeModal('auditorPanelModal');
+  refreshAuthUI();
+  renderFavorites();
+  renderComics();
+  renderMerch();
+  showToast('Sesión de auditor cerrada');
 });
 
 /* =========================================================
@@ -674,6 +710,7 @@ document.getElementById('addComicForm').addEventListener('submit', async (e) => 
   e.target.reset();
   renderAdminLists();
   renderComics();
+  refreshAuditIfOpen();
   showToast('Cómic agregado');
 });
 
@@ -697,6 +734,7 @@ document.getElementById('addMerchForm').addEventListener('submit', async (e) => 
   e.target.reset();
   renderAdminLists();
   renderMerch();
+  refreshAuditIfOpen();
   showToast('Producto agregado');
 });
 
@@ -714,6 +752,7 @@ document.getElementById('addNewsForm').addEventListener('submit', (e) => {
   e.target.reset();
   renderAdminLists();
   renderNews();
+  refreshAuditIfOpen();
   showToast('Noticia publicada');
 });
 
@@ -738,6 +777,7 @@ function renderAdminLists() {
       save(DB_KEYS.COMICS, updated);
       renderAdminLists();
       renderComics();
+      refreshAuditIfOpen();
       showToast('Cómic eliminado');
     });
   });
@@ -759,6 +799,7 @@ function renderAdminLists() {
       save(DB_KEYS.MERCH, updated);
       renderAdminLists();
       renderMerch();
+      refreshAuditIfOpen();
       showToast('Producto eliminado');
     });
   });
@@ -781,10 +822,55 @@ function renderAdminLists() {
       save(DB_KEYS.NEWS, updated);
       renderAdminLists();
       renderNews();
+      refreshAuditIfOpen();
       showToast('Noticia eliminada');
     });
   });
 }
+
+function renderAuditPanel() {
+  const comics = load(DB_KEYS.COMICS, []);
+  const merch = load(DB_KEYS.MERCH, []);
+  const news = load(DB_KEYS.NEWS, []);
+  const reviews = load(DB_KEYS.REVIEWS, {});
+  const cart = load(DB_KEYS.CART, {});
+  const salesUnits = Object.values(cart).reduce((total, item) => total + (item.qty || 0), 0);
+  const reviewCount = Object.values(reviews).reduce((total, list) => total + list.length, 0);
+
+  document.getElementById('auditStats').innerHTML = `
+    <div class="audit-stat"><strong>${comics.length}</strong><span>Cómics</span></div>
+    <div class="audit-stat"><strong>${merch.length}</strong><span>Productos</span></div>
+    <div class="audit-stat"><strong>${news.length}</strong><span>Noticias</span></div>
+    <div class="audit-stat"><strong>${reviewCount}</strong><span>Reseñas</span></div>
+    <div class="audit-stat"><strong>${salesUnits}</strong><span>Unidades en ventas</span></div>
+  `;
+
+  renderAuditList('auditComicsList', comics, item => `${item.title} — ${formatPrice(item.price)}`, 'No hay cómics registrados.');
+  renderAuditList('auditMerchList', merch, item => `${item.name} — ${formatPrice(item.price)}`, 'No hay productos registrados.');
+  renderAuditList('auditNewsList', news, item => `${item.title} — ${formatNewsDate(item.date)}`, 'No hay noticias publicadas.');
+}
+
+function refreshAuditIfOpen() {
+  if (currentUser && currentUser.role === 'auditor' && document.getElementById('auditorPanelModal').classList.contains('open')) {
+    renderAuditPanel();
+  }
+}
+
+function renderAuditList(elementId, items, label, emptyMessage) {
+  const list = document.getElementById(elementId);
+  if (items.length === 0) {
+    list.innerHTML = `<p class="audit-empty">${emptyMessage}</p>`;
+    return;
+  }
+  list.innerHTML = items.map(item => `<div class="audit-list-item"><span>${escapeHtml(label(item))}</span><span class="read-only-label">Lectura</span></div>`).join('');
+}
+
+window.addEventListener('storage', event => {
+  const auditDataKeys = [DB_KEYS.COMICS, DB_KEYS.MERCH, DB_KEYS.NEWS];
+  if (auditDataKeys.includes(event.key) && currentUser && currentUser.role === 'auditor') {
+    renderAuditPanel();
+  }
+});
 
 /* =========================================================
    UTIL
@@ -802,6 +888,11 @@ function escapeHtml(str) {
    INIT
    ========================================================= */
 seedData();
+if (currentUser && currentUser.role === 'auditor') {
+  document.body.classList.add('auditor-mode');
+  renderAuditPanel();
+  openModal('auditorPanelModal');
+}
 refreshAuthUI();
 renderFavorites();
 renderNews();
