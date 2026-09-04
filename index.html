@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cuentos Espantosos para niños caprichosos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/roman-antique" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <button class="logo-box" id="logoBtn" title="LEGENDS" aria-label="LEGENDS">
+        <img src="assets/Logo-sin_estrella.png" class="logo-img" alt="LEGENDS" />
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <button class="cart-btn" id="cartBtn" title="Carrito (0)">🛒 <span id="cartCount">0</span></button>
+      <button class="favorites-btn" id="favoritesBtn" title="Favoritos (0)" aria-controls="favoritesStrip" aria-expanded="false">♥ <span id="favoritesButtonCount">0</span></button>
+      <button class="auth-btn" id="authBtn">Registrarse / Iniciar sesión</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== FAVORITOS ===================== -->
+<section class="favorites-strip" id="favoritesStrip" aria-labelledby="favoritesTitle" aria-hidden="true">
+  <div class="favorites-inner">
+    <div class="favorites-heading">
+      <h2 id="favoritesTitle">Mis favoritos</h2>
+      <span id="favoritesCount">0 productos</span>
+    </div>
+    <div id="favoritesList" class="favorites-list"></div>
+  </div>
+</section>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <img src="assets/pag 8 (1).png" alt="Escena de Cuentos Espantosos" class="hero-img" />
+  <img src="assets/logov2.png" alt="LEGENDS" class="hero-logo" />
+  <div class="hero-overlay"></div>
+</section>
+
+<!-- ===================== NOTICIAS ===================== -->
+<section class="news-section" aria-labelledby="newsTitle">
+  <div class="news-inner">
+    <div class="news-heading">
+      <span class="news-kicker">Actualidad</span>
+      <h2 id="newsTitle">Noticias</h2>
+    </div>
+    <div id="newsList" class="news-list"></div>
+  </div>
+</section>
+
+<!-- ===================== CONTENIDO ===================== -->
+<main class="content-panel">
+
+  <section class="section-block">
+    <div class="section-bar-wrap">
+      <div class="section-bar">COMICS</div>
+      <img src="assets/star.png" class="comics-star" alt="" />
+    </div>
+    <div class="comics-grid" id="comicsGrid"></div>
+  </section>
+
+  <section class="section-block merch-section">
+    <div class="section-bar">MERCHANDISING</div>
+    <div class="merch-grid" id="merchGrid"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Cuentos Espantosos — Leyendas y mitos de Nicaragua © 2026</p>
+</footer>
+
+<!-- ===================== MODAL: REGISTRO ===================== -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <button class="modal-close" data-close="registerModal">✕</button>
+    <h2>Crear cuenta</h2>
+    <form id="registerForm">
+      <label>Nombre</label>
+      <input type="text" id="regName" required />
+      <label>Correo</label>
+      <input type="email" id="regEmail" required />
+      <label>Contraseña</label>
+      <input type="password" id="regPassword" required minlength="4" />
+      <p class="form-error" id="registerError"></p>
+      <button type="submit" class="submit-btn">Registrarme</button>
+    </form>
+    <p class="modal-switch">¿Ya tienes cuenta? <a href="#" id="goToLogin">Inicia sesión</a></p>
+  </div>
+</div>
+
+<!-- ===================== MODAL: LOGIN ===================== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" data-close="loginModal">✕</button>
+    <h2>Iniciar sesión</h2>
+    <form id="loginForm">
+      <label>Correo</label>
+      <input type="email" id="loginEmail" required />
+      <label>Contraseña</label>
+      <input type="password" id="loginPassword" required />
+      <p class="form-error" id="loginError"></p>
+      <button type="submit" class="submit-btn">Entrar</button>
+    </form>
+    <p class="modal-switch">¿No tienes cuenta? <a href="#" id="goToRegister">Regístrate</a></p>
+  </div>
+</div>
+
+<!-- ===================== MODAL: RESEÑAS DE UN COMIC ===================== -->
+<div class="modal-overlay" id="reviewsModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" data-close="reviewsModal">✕</button>
+    <h2 id="reviewsComicTitle">Reseñas</h2>
+
+    <div id="reviewFormWrap">
+      <form id="reviewForm">
+        <label>Tu calificación</label>
+        <div class="star-picker" id="starPicker">
+          <span data-star="1">★</span><span data-star="2">★</span><span data-star="3">★</span><span data-star="4">★</span><span data-star="5">★</span>
+        </div>
+        <label>Tu comentario</label>
+        <textarea id="reviewText" rows="3" required></textarea>
+        <button type="submit" class="submit-btn">Publicar reseña</button>
+      </form>
+    </div>
+    <p id="reviewLoginNotice" class="form-hint">Debes <a href="#" id="reviewLoginLink">iniciar sesión</a> para dejar una reseña.</p>
+
+    <div class="reviews-list" id="reviewsList"></div>
+  </div>
+</div>
+
+<!-- ===================== MODAL: LOGIN ADMIN ===================== -->
+<div class="modal-overlay" id="adminLoginModal">
+  <div class="modal">
+    <button class="modal-close" data-close="adminLoginModal">✕</button>
+    <h2>Acceso administrador</h2>
+    <form id="adminLoginForm">
+      <label>Nombre de administrador</label>
+      <input type="text" id="adminUser" required />
+      <label>Contraseña</label>
+      <input type="password" id="adminPass" required />
+      <p class="form-error" id="adminLoginError"></p>
+      <button type="submit" class="submit-btn">Entrar al panel</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===================== PANEL ADMIN ===================== -->
+<div class="modal-overlay" id="adminPanelModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" data-close="adminPanelModal">✕</button>
+    <h2>Panel de administración</h2>
+    <button class="submit-btn danger" id="adminLogoutBtn" style="margin-bottom:16px;">Cerrar sesión de administrador</button>
+
+    <h3>Cómics</h3>
+    <form id="addComicForm" class="admin-form">
+      <input type="text" id="newComicTitle" placeholder="Título del cómic" required />
+      <input type="text" id="newComicPrice" placeholder="Precio (ej. C$ 250.00)" required />
+      <input type="file" id="newComicImage" accept="image/*" />
+      <button type="submit" class="submit-btn">Agregar cómic</button>
+    </form>
+    <div class="admin-list" id="adminComicsList"></div>
+
+    <h3>Merchandising</h3>
+    <form id="addMerchForm" class="admin-form">
+      <input type="text" id="newMerchName" placeholder="Nombre del producto" required />
+      <input type="text" id="newMerchPrice" placeholder="Precio (ej. C$ 350.00)" required />
+      <input type="file" id="newMerchImage" accept="image/*" required />
+      <button type="submit" class="submit-btn">Agregar producto</button>
+    </form>
+    <div class="admin-list" id="adminMerchList"></div>
+
+    <h3>Noticias</h3>
+    <form id="addNewsForm" class="admin-form news-admin-form">
+      <select id="newNewsCategory" required>
+        <option value="">Tipo de noticia</option>
+        <option>Nuevos cómics</option>
+        <option>Próximos lanzamientos</option>
+        <option>Eventos</option>
+        <option>Promociones</option>
+        <option>Avisos importantes</option>
+        <option>Ofertas especiales</option>
+      </select>
+      <input type="text" id="newNewsTitle" placeholder="Título de la noticia" required />
+      <input type="date" id="newNewsDate" required />
+      <textarea id="newNewsDescription" rows="3" placeholder="Descripción, detalles o fechas importantes" required></textarea>
+      <button type="submit" class="submit-btn">Publicar noticia</button>
+    </form>
+    <div class="admin-list" id="adminNewsList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ===================== MODAL: ZOOM DE MERCHANDISING ===================== -->
+<div class="modal-overlay" id="imageZoomModal">
+  <div class="zoom-modal">
+    <button class="modal-close" data-close="imageZoomModal" aria-label="Cerrar imagen">✕</button>
+    <img id="zoomImage" src="" alt="" />
+  </div>
+</div>
+
+<!-- ===================== PANEL: CARRITO ===================== -->
+<div class="cart-panel" id="cartPanel" aria-hidden="true">
+  <button class="cart-close" id="cartClose">✕</button>
+  <h2>Carrito de compras</h2>
+  <div id="cartList" class="cart-list"></div>
+  <div class="cart-footer">
+    <div class="cart-total">Total: <span id="cartTotal">C$ 0.00</span></div>
+    <button class="submit-btn" id="checkoutBtn">Pagar</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
