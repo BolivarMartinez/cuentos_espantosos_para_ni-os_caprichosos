@@ -41,42 +41,32 @@ trabajo hackhaton/
 ## Nota honesta
 
 Como antes, todo corre en el navegador con `localStorage`: es perfecto para la demo del hackathon, pero los datos no se comparten entre distintas personas ni dispositivos. Para eso se necesitaría un backend real (Node.js + base de datos, o Firebase/Supabase) más adelante.
-Cambios realizados en la página
+## Resumen de cambios realizados hoy
 
-## Estilo del merchandising
-Se ajustó la sección de merchandising para que se vea como una galería:
+Se creó la primera versión funcional de **Cuentos Espantosos para niños caprichosos**, una tienda web de cómics y merchandising desarrollada con HTML, CSS y JavaScript puro.
 
-- imágenes más pequeñas
-- separación uniforme entre cada una
-- ormato más limpio y ordenado
-- etiquetas de nombre sobre la imagen
-CSS aplicado:
+### Funcionalidades
 
-- grid con columnas más estrechas
-- gap: 16px
-- aspect-ratio: 4 / 5
-- bordes redondeados y sombra ligera
+- Registro e inicio de sesión de usuarios mediante `localStorage`.
+- Catálogo de cómics con portada, título y precio.
+- Carrito de compra: se agrega un cómic al hacer clic en su precio.
+- Sistema de reseñas con valoración de 1 a 5 estrellas y comentario.
+- Panel de administrador oculto, accesible tras cinco clics sobre el logo.
+- Gestión administrativa de cómics, productos de merchandising y comentarios.
+- Persistencia local de usuarios, productos, reseñas y carrito.
 
-## Fuente del sitio
-Se cambió la tipografía principal a Roman Antique.
+### Diseño y contenido visual
 
-Se agregó en el HTML:
+- Header simplificado con logo, nombre del sitio y acceso a registro o inicio de sesión.
+- Hero a todo lo ancho con título superpuesto y efecto visual glitch.
+- Tarjetas de cómics con bordes morados y tipografía decorativa.
+- Sección de merchandising reorganizada como una galería con imágenes más pequeñas, separación uniforme, etiquetas, proporción `4 / 5`, bordes redondeados y sombra ligera.
+- Tipografía principal actualizada a **Roman Antique** mediante CDN.
+- Texto “Cuentos Espantosos para niños caprichosos” trasladado al header y retirado del hero para mantener una portada más limpia.
+- Inclusión de logos, estrellas, portadas y fotografías de merchandising en `assets/`.
 
-import de la fuente desde Google Fonts CDN
-referencia a https://fonts.cdnfonts.com/css/roman-antique
+### Base técnica
 
-Y en CSS:
-
-- font-family: 'Roman Antique', 'Times New Roman', serif;
-
-## Texto del encabezado
-Se dejó el texto solo en la parte superior, en el header:
-
-“Cuentos Espantosos para niños caprichosos”
-Se quitó del hero para mantener la portada más limpia.
-
-## Cambios visuales aplicados
-- Se rediseñó la sección de merchandising para que se vea como una galería con imágenes más pequeñas y separadas.
-- Se actualizó la tipografía del sitio a Roman Antique para darle un estilo más clásico y editorial.
-- Se eliminó el texto del hero para mantener una portada más limpia.
-- Se dejó el nombre del proyecto solo en la cabecera superior.
+- Nueva estructura completa en `index.html`, `styles.css` y `app.js`.
+- Aplicación sin dependencias de `npm` ni backend.
+- Datos almacenados únicamente en el navegador mediante `localStorage`, adecuada para la demo del hackathon.
