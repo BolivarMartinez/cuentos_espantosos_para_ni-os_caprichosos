@@ -18,11 +18,14 @@
 
 * { box-sizing: border-box; }
 
+html { overflow-x: hidden; }
+
 body {
   margin: 0;
   font-family: 'Roman Antique', 'Times New Roman', serif;
   background: var(--lavender);
   color: var(--text-dark);
+  overflow-x: hidden;
 }
 
 h1, h2, h3, .section-bar, .comic-title {
@@ -228,6 +231,17 @@ h1, h2, h3, .section-bar, .comic-title {
   overflow: visible;
   background: var(--bg-dark);
 }
+.hero-decor {
+  position: absolute;
+  z-index: 2;
+  width: clamp(110px, 18vw, 250px);
+  pointer-events: none;
+  opacity: 0.8;
+  filter: drop-shadow(0 10px 12px rgba(0,0,0,0.22));
+}
+.hero-decor img { display: block; width: 100%; height: auto; }
+.hero-decor-left { left: 1%; top: 8%; transform: rotate(-14deg); }
+.hero-decor-right { right: 1%; bottom: 6%; transform: rotate(13deg); }
 .hero-img {
   width: 100%;
   display: block;
@@ -267,10 +281,24 @@ h1, h2, h3, .section-bar, .comic-title {
 
 /* ===================== NOTICIAS ===================== */
 .news-section {
+  position: relative;
+  overflow: hidden;
   background: #17121f;
   border-top: 3px solid var(--yellow);
   border-bottom: 1px solid #4d3d5e;
   color: var(--white);
+}
+.section-decor {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+.news-decor {
+  width: clamp(100px, 15vw, 190px);
+  right: 1%;
+  top: -26px;
+  opacity: 0.22;
+  transform: rotate(18deg);
 }
 .news-inner {
   max-width: 1200px;
@@ -308,26 +336,42 @@ h1, h2, h3, .section-bar, .comic-title {
   margin-right: auto;
   overflow: hidden;
 }
+.content-decor {
+  width: clamp(120px, 18vw, 230px);
+  left: -28px;
+  bottom: 5%;
+  opacity: 0.15;
+  transform: rotate(-16deg);
+  mix-blend-mode: multiply;
+}
 
 .section-block {
   position: relative;
   margin-bottom: 52px;
   isolation: isolate;
 }
-.section-block::before {
-  content: '';
+.catalog-decor {
   position: absolute;
-  inset: -24px -28px;
-  z-index: -1;
+  inset: -16px -10px;
+  z-index: 0;
+  overflow: hidden;
   pointer-events: none;
-  opacity: 0.13;
-  background-image: url('assets/Image1.png'), url('assets/Image2.png'), url('assets/Image3.png');
-  background-repeat: no-repeat;
-  background-position: 4% 18%, 96% 12%, 52% 92%;
-  background-size: 150px, 130px, 180px;
-  mix-blend-mode: multiply;
 }
-
+.catalog-decor img {
+  position: absolute;
+  width: clamp(130px, 19vw, 245px);
+  height: auto;
+  opacity: 0.2;
+  mix-blend-mode: multiply;
+  filter: saturate(1.1);
+}
+.catalog-decor-one { top: 4%; left: -30px; transform: rotate(-15deg); }
+.catalog-decor-two { top: 23%; right: -34px; transform: rotate(16deg); }
+.catalog-decor-three { bottom: -34px; left: 40%; transform: rotate(-8deg); }
+.merch-decor { inset: -18px -10px 0; }
+.merch-decor .catalog-decor-one { top: 4%; left: 6%; transform: rotate(13deg); }
+.merch-decor .catalog-decor-two { top: 36%; right: 2%; transform: rotate(-13deg); }
+.merch-decor .catalog-decor-three { bottom: -42px; left: 45%; transform: rotate(12deg); }
 .section-bar-wrap { position: relative; }
 .comics-star {
   position: absolute;
@@ -341,7 +385,8 @@ h1, h2, h3, .section-bar, .comic-title {
 }
 
 .section-bar {
-  font-family: 'super_squad', 'Roman Antique', 'Times New Roman', serif;
+  font-family: 'Super Squad', 'Roman Antique', 'Times New Roman', serif;
+  font-style: italic;
   background: var(--magenta);
   color: var(--white);
   text-align: center;
@@ -454,13 +499,6 @@ h1, h2, h3, .section-bar, .comic-title {
 .merch-section {
   margin-left: -28px;
   margin-right: -28px;
-}
-.merch-section::before {
-  inset: -20px 0;
-  opacity: 0.14;
-  background-image: url('assets/Image4.png'), url('assets/Image5.png'), url('assets/img_p1_2.png');
-  background-position: 7% 20%, 92% 78%, 50% 48%;
-  background-size: 170px, 150px, 210px;
 }
 .merch-section .section-bar-wrap,
 .merch-section > .section-bar { margin-left: 28px; margin-right: 28px; }

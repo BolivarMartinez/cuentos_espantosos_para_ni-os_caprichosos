@@ -58,3 +58,13 @@ Se incorporó un **modo auditor de solo lectura** para revisar el estado de la d
 También se documentaron y consolidaron las mejoras actuales de la interfaz: carrito visible con cantidades y total, favoritos por usuario, noticias administrables, galería de merchandising reorganizada, tipografía Roman Antique y recursos visuales en `assets/`.
 
 La aplicación continúa funcionando sin dependencias de `npm` ni backend; todos los datos se almacenan localmente en el navegador para la demo del hackathon.
+
+## Cambios visuales más recientes
+
+- Se añadieron cuatro ilustraciones decorativas nuevas repartidas entre el hero, noticias, COMICS y MERCHANDISING.
+- Las ilustraciones del catálogo se mantienen detrás de las tarjetas, productos, títulos y controles para no afectar la interacción.
+- Se retiraron del proyecto las decoraciones antiguas `Image1.png`, `Image2.png`, `Image3.png`, `Image4.png` e `Image5.png`, junto con sus referencias CSS.
+- Se sustituyó el logo pequeño de la esquina superior izquierda por `assets/logo-con-borde-lol.png`.
+- El logo continúa dentro del mismo botón `logoBtn`, por lo que conserva sus funciones, incluido el acceso al panel de administración mediante varios clics.
+- Los encabezados grandes `COMICS` y `MERCHANDISING` ahora usan la fuente **Super Squad Italic**, cargada desde CDN.
+- Se añadió `overflow-x: hidden` al documento para evitar desplazamiento horizontal causado por las decoraciones posicionadas en los bordes.
